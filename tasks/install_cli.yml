@@ -1,9 +1,9 @@
 ---
 # tasks file for ansible-role-globus
 
-- name: Ensure requests version 2.9.2 is installed
+- name: "Ensure requests version {{ requests_version }} is installed"
   pip:
-    name: requests==2.9.2
+    name: "requests=={{ requests_version }}"
     extra_args: --user
     state: present
 

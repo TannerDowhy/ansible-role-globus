@@ -1,2 +1,17 @@
 ---
-# defaults file for ansible-role-globus/
+# defaults file for ansible-role-globus
+
+software_path: "{{ ansible_env.PWD }}/software"
+globusconnect_version: 2.3.6
+install_cli: 0
+configure_endpoint: 0
+transfer_files: 0
+batch_files: 0
+directory_files: 0
+single_file: 0
+source_id: null
+source_path: null
+target_id: null
+target_path: null
+endpoint_name: personal_endpoint
+requests_version: 2.9.2

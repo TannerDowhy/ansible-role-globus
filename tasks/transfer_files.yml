@@ -3,19 +3,18 @@
 
 - name: Start the endpoint
   shell: "{{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6/globusconnectpersonal -start &"
-  
+
  - name: Transfer batch of files from source to destination
    shell: "{{ ansible_env.PWD }}/.local/bin/globus transfer {{ source_id }}:{{ source_path }} {{ target_id }}:{{ target_path }} --batch --label {{ transfer_label }} < {{ input_files }}"
-   when: batch_files == '1'
+   when: batch_files == 1
 
 - name: Transfer directory from source to destination
-  shell: "{{ ansible_env.PWD }}/.local/bin/globus transfer {{ source_id }}:{{ source_path }} {{ target_id }}:{{ target_path }} --recursive --label {{ transfer_label }}"  
-  when: directory_files == '1'
+  shell: "{{ ansible_env.PWD }}/.local/bin/globus transfer {{ source_id }}:{{ source_path }} {{ target_id }}:{{ target_path }} --recursive --label {{ transfer_label }}"
+  when: directory_files == 1
 
 - name: Transfer files from source to destination
   shell: "{{ ansible_env.PWD }}/.local/bin/globus transfer {{ source_id }}:{{ source_path }} {{ target_id }}:{{ target_path }} --label {{ transfer_label }}"
-  when: single_file == '1'
+  when: single_file == 1
 
 - name: Stop the endpoint
-  shell: "{{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6/globusconnectpersonal -stop &
-
+  shell: "{{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6/globusconnectpersonal -stop &"

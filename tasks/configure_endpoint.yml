@@ -1,15 +1,15 @@
 ---
-# tasks
+# tasks file for ansible-role-globus
 
 - name: Get the Globus Personal Connect software
   get_url:
     url: https://downloads.globus.org/globus-connect-personal/linux/stable/globusconnectpersonal-latest.tgz
-    dest: "{{ ansible_env.PWD }}/software"
+    dest: "{{ software_path }}"
 
 - name: Unarchive the download
   unarchive:
-    src: "{{ ansible_env.PWD }}/software/globusconnectpersonal-latest.tgz"
-    dest: "{{ ansible_env.PWD }}/software"
+    src: "{{ software_path }}/globusconnectpersonal-latest.tgz"
+    dest: "{{ software_path }}"
     remote_src: true
   notify:
     - remove archived file
@@ -17,14 +17,14 @@
 - name: Get the setup ID
   #command: "content=$(globus endpoint create --personal vm | cut -f 10 -d ' ' ); {{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6/globusconnectpersonal -setup $content"
   #command: "{{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6/globusconnectpersonal -setup $(globus endpoint create --personal vm | cut -f 10 -d ' ')"
-  shell: "{{ ansible_env.PWD }}/.local/bin/globus endpoint create --personal vm | cut -f 10 -d ' '"
+  shell: "{{ ansible_env.PWD }}/.local/bin/globus endpoint create --personal {{ endpoint_name }} | cut -f 10 -d ' '"
   register: setup_id
 
   #- name: parse the setup id
   #command: "cut -f 10 -d ' ' {{ setup_id }}"
   #register: setup_key
-  
+
 - name: Setup the endpoint
   shell: "./globusconnectpersonal -setup {{ setup_id }}"
   args:
-    chdir: "{{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6"
+    chdir: "{{ ansible_env.PWD }}/software/globusconnectpersonal-{{ globusconnect_version}}"
