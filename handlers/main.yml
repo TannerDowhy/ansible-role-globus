@@ -1,2 +1,7 @@
 ---
-# handlers file for ansible-role-globus/
+# handlers file for ansible-role-globus
+
+- name: remove archived file
+  file:
+      path: "{{ ansible_env.PWD }}/software/globusconnectpersonal-latest.tgz"
+      state: absent

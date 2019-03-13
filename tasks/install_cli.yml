@@ -1,0 +1,14 @@
+---
+# tasks file for ansible-role-globus
+
+- name: Ensure requests version 2.9.2 is installed
+  pip:
+    name: requests==2.9.2
+    extra_args: --user
+    state: present
+
+- name: Ensure Globus-cli is installed
+  pip:
+    name: globus-cli
+    extra_args: --upgrade --user
+    state: present

@@ -1,2 +1,13 @@
 ---
-# tasks file for ansible-role-globus/
+# tasks file for ansible-role-globus
+
+- name: Make the software directory
+  file: path="{{ ansible_env.PWD }}/{{ item }}" state=directory mode=0777
+  with_items:
+    - software
+
+#- name: Install the globus-cli
+  #  import_tasks: install_cli.yml
+
+- name: Configure the endpoint
+  import_tasks: configure_endpoint.yml
