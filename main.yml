@@ -1,5 +1,7 @@
 ---
 
 - hosts: all
-  roles:
-   - ansible-role-globus
+  tasks:
+   - install_cli
+   - configure_endpoint
+   - transfer_files
