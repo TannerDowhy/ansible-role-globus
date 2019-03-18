@@ -3,15 +3,15 @@
 
 software_path: "{{ ansible_env.PWD }}/software"
 globusconnect_version: 2.3.6
-install_cli: 0e
-configure_endpoint: 0
-transfer_files: 0
-batch_files: 0
-directory_files: 0
-single_file: 0
+install_cli: false
+configure_endpoint: false
+transfer_files: false
+batch_files: false
+directory_files: false
+single_file: false
 source_id: null
 source_path: null
-target_id: null
+target_id: "{{ endpoint_id }}"
 target_path: null
 endpoint_name: personal_endpoint
 requests_version: 2.9.2

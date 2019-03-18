@@ -6,12 +6,12 @@
 
 - name: Install the globus-cli
   import_tasks: install_cli.yml
-  when: install_cli == 1
+  when: "{{install_cli}}"
 
 - name: Configure the endpoint
   import_tasks: configure_endpoint.yml
-  when: configure_endpoint == 1
+  when: "{{configure_endpoint}}"
 
 - name: Transfer files
   import_tasks: transfer_files.yml
-  when: transfer_files == 1
+  when: "{{transfer_files}}"

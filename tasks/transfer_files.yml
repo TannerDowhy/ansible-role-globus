@@ -1,20 +1,36 @@
 ---
 # transfer files
 
-- name: Start the endpoint
-  shell: "{{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6/globusconnectpersonal -start &"
+# - name: Start the endpoint
+#   shell: "{{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6/globusconnectpersonal -start &"
 
- - name: Transfer batch of files from source to destination
-   shell: "{{ ansible_env.PWD }}/.local/bin/globus transfer {{ source_id }}:{{ source_path }} {{ target_id }}:{{ target_path }} --batch --label {{ transfer_label }} < {{ input_files }}"
-   when: batch_files == 1
+- name: Transfer batch of files from source to destination
+  shell: "{{ ansible_env.PWD }}/.local/bin/globus transfer {{ source_id }}:{{ source_path }} {{ target_id }}:{{ target_path }} --batch --label {{ transfer_label }} < {{ input_files }}"
+  when: "{{batch_files}}"
 
 - name: Transfer directory from source to destination
   shell: "{{ ansible_env.PWD }}/.local/bin/globus transfer {{ source_id }}:{{ source_path }} {{ target_id }}:{{ target_path }} --recursive --label {{ transfer_label }}"
-  when: directory_files == 1
+  when: "{{directory_files}}"
+
+- name: Wait for transfer to complete
+  command: "{{ software_path }}/globusconnectpersonal-{{ globusconnect_version }}/globusconnectpersonal -status"
+  async: 10000
+  poll: 20
+#   register: waiting_out
+#
+# - name: Check Async task
+#   set_fact:
+#     waiting_status: "{{ waiting_out.stdout.split(' ')[6] }}"
+#
+# - debug:
+#     var: waiting_status
+
+# - debug:
+#     var: transfer_out
 
 - name: Transfer files from source to destination
   shell: "{{ ansible_env.PWD }}/.local/bin/globus transfer {{ source_id }}:{{ source_path }} {{ target_id }}:{{ target_path }} --label {{ transfer_label }}"
-  when: single_file == 1
+  when: "{{single_file}}"
 
-- name: Stop the endpoint
-  shell: "{{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6/globusconnectpersonal -stop &"
+# - name: Stop the endpoint
+#   shell: "{{ ansible_env.PWD }}/software/globusconnectpersonal-2.3.6/globusconnectpersonal -stop &"
