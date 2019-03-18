@@ -1,7 +1,4 @@
 ---
 
 - hosts: all
-  tasks:
-   - install_cli
-   - configure_endpoint
-   - transfer_files
+  import_tasks: main.yml
